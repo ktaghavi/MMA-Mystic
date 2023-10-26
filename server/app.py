@@ -47,21 +47,16 @@ class Logout(Resource):
 
 api.add_resource(Logout, '/logout')
 
-@app.route('/')
-def index():
-    return '<h1>Project Server</h1>'
-
-
 # User routes
 
 class User(Resource):
 
     # get all users   
-    def get(self):
-        users_to_get = User.query.all()
-        data = [user.to_dict() for user in users_to_get]
+    # def get(self):
+    #     users_to_get = User.query.all()
+    #     data = [user.to_dict() for user in users_to_get]
 
-        return data, 200
+    #     return data, 200
     
     # post a new user
     def post(self):
@@ -82,7 +77,7 @@ class User(Resource):
         except:
             raise Exception('There was an error while creating the user')
 
-api.add_resource(User, '/user')
+api.add_resource(User, '/users')
 
 class UserById(Resource):
     
@@ -98,7 +93,7 @@ class UserById(Resource):
 
         user_to_choose = User.query.filter_by(id=id).first() 
 
-        if user_to_choose != None:
+        if user_to_choose:
             for field in data_to_patch_from:
                 setattr(user_to_choose, field ,data_to_patch_from[field])
         else:
@@ -108,14 +103,14 @@ class UserById(Resource):
 
         user_to_choose = User.query.filter_by(id=id).first() 
 
-        if user_to_choose != None:
+        if user_to_choose:
             db.session.delete(user_to_choose)
             db.session.commit()
             return {}, 202
         else:
             return {'error':'the user does not exist'}, 404
 
-api.add_resource(UserById, '/user/<int:id>')
+api.add_resource(UserById, '/users/<int:id>')
 
 
 # Fighter routes 
@@ -153,7 +148,7 @@ class FighterById(Resource):
         else:
             return {'error': 'The farmer does not exist'}, 404
 
-api.add_resource(FighterById, '/fighter/<int:id>')
+api.add_resource(FighterById, '/fighters/<int:id>')
 
 
 # Fight History routes 
@@ -185,7 +180,7 @@ class FightHistory(Resource):
         except:
             raise Exception('Error while creating fight history')
 
-api.add_resource(ReviewNorm, '/fight_history')
+api.add_resource(FightHistory, '/fight_history')
 
 class FightById(Resource):
 
@@ -216,7 +211,7 @@ class FightById(Resource):
         else:
             return {'error': 'The fight does not exist'}, 404
 
-api.add_resource(ReviewById, '/fight/<int:id>')
+api.add_resource(FightById, '/fights/<int:id>')
 
 
 # Prediction routes
@@ -275,4 +270,4 @@ class PredictionById(Resource):
         else:
             return {'error': 'The prediction does not exist'}, 404
 
-api.add_resource(CartById, '/prediction/<int:id>')
+api.add_resource(PredictionById, '/predictions/<int:id>')

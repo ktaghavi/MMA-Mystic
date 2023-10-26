@@ -1,5 +1,7 @@
+from sqlalchemy.orm import validates
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy.ext.hybrid import hybrid_property
 
 from config import db, bcrypt
 
@@ -15,7 +17,7 @@ class User(db.Model, SerializerMixin):
     predictions = db.relationship('Prediction', back_populates='user')
 
     #password stuff
-    @hybrid_property
+    @hybrid_property 
     def password_hash(self):
         return self._password_hash
     @password_hash.setter
@@ -33,9 +35,10 @@ class User(db.Model, SerializerMixin):
     serialize_rules = ('-predictions.user',)  # Exclude user relationship from serialization
 
 class Fighter(db.Model, SerializerMixin):
-    __tablename__ = 'fighter'
+    __tablename__ = 'fighters'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
+    nickname = db.Column(db.String)
     weightclass = db.Column(db.String)
     height = db.Column(db.Float)
     stance = db.Column(db.String)
@@ -58,8 +61,8 @@ class Fighter(db.Model, SerializerMixin):
 class FightHistory(db.Model, SerializerMixin):
     __tablename__ = 'fight_history'
     id = db.Column(db.Integer, primary_key=True)
-    F1_id = db.Column(db.Integer, db.ForeignKey('fighter.id'))
-    F2_id = db.Column(db.Integer, db.ForeignKey('fighter.id'))
+    F1_id = db.Column(db.Integer, db.ForeignKey('fighters.id'))
+    F2_id = db.Column(db.Integer, db.ForeignKey('fighters.id'))
     event_date = db.Column(db.Date)
     location = db.Column(db.String)
     F1_opening_odds = db.Column(db.Float)
@@ -73,11 +76,11 @@ class FightHistory(db.Model, SerializerMixin):
     serialize_rules = ('-fighter_1.fight_history_fighter_1', '-fighter_2.fight_history_fighter_2',)  # Exclude fighter relationships
 
 class Prediction(db.Model, SerializerMixin):
-    __tablename__ = 'prediction'
+    __tablename__ = 'predictions'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    F1_id = db.Column(db.Integer, db.ForeignKey('fighter.id'))
-    F2_id = db.Column(db.Integer, db.ForeignKey('fighter.id'))
+    F1_id = db.Column(db.Integer, db.ForeignKey('fighters.id'))
+    F2_id = db.Column(db.Integer, db.ForeignKey('fighters.id'))
     F1_win_prob = db.Column(db.Float)
     F2_win_prob = db.Column(db.Float)
     user = db.relationship('User', back_populates='predictions')
