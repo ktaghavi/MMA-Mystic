@@ -32,7 +32,7 @@ class User(db.Model, SerializerMixin):
             password.encode('utf-8')
         )
 
-    serialize_rules = ('-predictions.user',)  # Exclude user relationship from serialization
+    serialize_rules = ["-predictions.user"]
 
 class Fighter(db.Model, SerializerMixin):
     __tablename__ = 'fighters'
@@ -56,7 +56,12 @@ class Fighter(db.Model, SerializerMixin):
     predictions_fighter_1 = db.relationship('Prediction', back_populates='fighter_1', foreign_keys='Prediction.F1_id')
     predictions_fighter_2 = db.relationship('Prediction', back_populates='fighter_2', foreign_keys='Prediction.F2_id')
 
-    serialize_rules = ('-predictions.fighter_1', '-predictions.fighter_2',)  # Exclude fighter relationships
+    serialize_rules = [
+        "-predictions_fighter_1",
+        "-predictions_fighter_2",
+        "-fight_history_fighter_1.fighter_1",
+        "-fight_history_fighter_2.fighter_2",
+    ]
 
 class FightHistory(db.Model, SerializerMixin):
     __tablename__ = 'fight_history'
@@ -73,7 +78,10 @@ class FightHistory(db.Model, SerializerMixin):
     fighter_1 = db.relationship('Fighter', back_populates='fight_history_fighter_1', foreign_keys=[F1_id])
     fighter_2 = db.relationship('Fighter', back_populates='fight_history_fighter_2', foreign_keys=[F2_id])
 
-    serialize_rules = ('-fighter_1.fight_history_fighter_1', '-fighter_2.fight_history_fighter_2',)  # Exclude fighter relationships
+    serialize_rules = [
+        "-fighter_1.fight_history_fighter_1",
+        "-fighter_2.fight_history_fighter_2",
+    ]
 
 class Prediction(db.Model, SerializerMixin):
     __tablename__ = 'predictions'
@@ -87,4 +95,8 @@ class Prediction(db.Model, SerializerMixin):
     fighter_1 = db.relationship('Fighter', back_populates='predictions_fighter_1', foreign_keys=[F1_id])
     fighter_2 = db.relationship('Fighter', back_populates='predictions_fighter_2', foreign_keys=[F2_id])
 
-    serialize_rules = ('-user.predictions',)  # Exclude user relationship from serialization
+    serialize_rules = [
+        "-user",
+        "-fighter_1",
+        "-fighter_2",
+    ]

@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, render_template
+from flask import request, render_template, session
 from flask_restful import Resource
 
 # Local imports
@@ -49,26 +49,27 @@ api.add_resource(Logout, '/logout')
 
 # User routes
 
-class User(Resource):
+class Users(Resource):
 
     # get all users   
-    # def get(self):
-    #     users_to_get = User.query.all()
-    #     data = [user.to_dict() for user in users_to_get]
+    def get(self):
+        users_to_get = User.query.all()
+        data = [user.to_dict() for user in users_to_get]
 
-    #     return data, 200
+        return data, 200
     
     # post a new user
     def post(self):
         user_to_create = request.get_json()
-
+        print(user_to_create)
         try:
             new_user = User(   
                 username = user_to_create['username'],
                 email = user_to_create['email'],
                 password_hash = user_to_create['password'],
-                user_type = None
             )
+
+            print(new_user)
 
             db.session.add(new_user)
             db.session.commit()
@@ -77,7 +78,7 @@ class User(Resource):
         except:
             raise Exception('There was an error while creating the user')
 
-api.add_resource(User, '/users')
+api.add_resource(Users, '/users')
 
 class UserById(Resource):
     
@@ -115,19 +116,19 @@ api.add_resource(UserById, '/users/<int:id>')
 
 # Fighter routes 
 
-class Fighter(Resource):
+class Fighters(Resource):
 
     def get(self):
         fighters = Fighter.query.all()
         data = [fighter.to_dict() for fighter in fighters]
         return data, 200
 
-api.add_resource(Fighter, '/fighter_roster')
+api.add_resource(Fighters, '/fighter_roster')
 
 class FighterById(Resource):
 
     def get(self, id):
-        fighter = Farmer.query.filter_by(id=id).first()
+        fighter = Fighter.query.filter_by(id=id).first()
         return fighter.to_dict(), 200
 
     def patch(self, id):
@@ -137,27 +138,27 @@ class FighterById(Resource):
             for field in data_to_patch:
                 setattr(fighter, field, data_to_patch[field])
         else:
-            return {'error': 'The farmer does not exist'}, 404
+            return {'error': 'The fighter does not exist'}, 404
 
     def delete(self, id):
-        farmer = Farmer.query.filter_by(id=id).first()
-        if farmer:
-            db.session.delete(farmer)
+        fighter = Fighter.query.filter_by(id=id).first()
+        if fighter:
+            db.session.delete(fighter)
             db.session.commit()
             return {}, 202
         else:
-            return {'error': 'The farmer does not exist'}, 404
+            return {'error': 'The fighter does not exist'}, 404
 
 api.add_resource(FighterById, '/fighters/<int:id>')
 
 
 # Fight History routes 
 
-class FightHistory(Resource):
+class FightHistories(Resource):
 
     def get(self):
         completed_fights = FightHistory.query.all()
-        data = [review.to_dict() for fights in completed_fights]
+        data = [fights.to_dict() for fights in completed_fights]
         return data, 200
 
     def post(self):
@@ -180,7 +181,7 @@ class FightHistory(Resource):
         except:
             raise Exception('Error while creating fight history')
 
-api.add_resource(FightHistory, '/fight_history')
+api.add_resource(FightHistories, '/fight_history')
 
 class FightById(Resource):
 
@@ -216,7 +217,7 @@ api.add_resource(FightById, '/fights/<int:id>')
 
 # Prediction routes
 
-class Prediction(Resource):
+class Predictions(Resource):
 
     def get(self):
         predictions = Prediction.query.all()
@@ -239,7 +240,7 @@ class Prediction(Resource):
         except:
             raise Exception('Error while creating prediction')
 
-api.add_resource(Prediction, '/predictions')
+api.add_resource(Predictions, '/predictions')
 
 class PredictionById(Resource):
 
@@ -271,3 +272,6 @@ class PredictionById(Resource):
             return {'error': 'The prediction does not exist'}, 404
 
 api.add_resource(PredictionById, '/predictions/<int:id>')
+
+if __name__ == '__main__':
+    app.run(port=5000, debug=True)
