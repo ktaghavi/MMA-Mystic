@@ -1,34 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
+import {BrowserRouter, Routes, Route, NavLink} from 'react-router-dom'
 import './App.css'
 
-function App() {
+import NavBar from './components/Header/NavBar'
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+import Home from './components/pages/1.home/Home'
+import Login from './components/pages/2.login/Login'
+import SignUp from './components/pages/3.signup/SignUp'
+import CompareFighters from './components/pages/4.compare-fighters/CompareFighters'
+import Predictions from './components/pages/5.predictions/Predictions'
+import Profile from './components/pages/6.profile/Profile'
+import UpcomingEvents from './components/pages/7.upcoming-events/UpcomingEvents'
+import PastEvents from './components/pages/8.past-events/PastEvents'
+import Footer from './components/Footer/Footer'
+
+function App() {
+  const [currentUser, setCurrentUser] = useState(null)
+  
+  return (  
+    
+    <BrowserRouter>
+
+      <NavBar currentUser={currentUser} />
+
+      <Routes>
+
+
+        <Route path="/" element={<Home />}/>
+
+        <Route path="login" element={<Login setCurrentUser={setCurrentUser}/>}/>
+        <Route path="signup" element={<SignUp />}/>
+        <Route path='compare-fighters' element={<CompareFighters />}/>
+        <Route path='predictions' element={<Predictions />}/>
+        <Route path='profile' element={<Profile />}/>
+        <Route path='upcoming-events' element={<UpcomingEvents />}/>
+        <Route path='past-events' element={<PastEvents />}/>
+
+      </Routes> 
+
+      <Footer /> 
+    
+    </BrowserRouter>
   )
 }
-
+  
 export default App
+  
