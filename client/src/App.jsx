@@ -14,27 +14,23 @@ import UpcomingEvents from './components/pages/7.upcoming-events/UpcomingEvents'
 import PastEvents from './components/pages/8.past-events/PastEvents'
 import Footer from './components/Footer/Footer'
 
-function App() {
-  const [currentUser, setCurrentUser] = useState(null)
-  
+function App() {  
   return (  
-    
     <BrowserRouter>
-
-      <NavBar currentUser={currentUser} />
+    
+      <NavBar />
 
       <Routes>
 
-
         <Route path="/" element={<Home />}/>
 
-        <Route path="login" element={<Login setCurrentUser={setCurrentUser}/>}/>
-        <Route path="signup" element={<SignUp />}/>
-        <Route path='compare-fighters' element={<CompareFighters />}/>
-        <Route path='predictions' element={<Predictions />}/>
-        <Route path='profile' element={<Profile />}/>
-        <Route path='upcoming-events' element={<UpcomingEvents />}/>
-        <Route path='past-events' element={<PastEvents />}/>
+        <Route path="/login" element={<Login />}/>
+        <Route path="/signup" element={<SignUp />}/>
+        <Route path='/upcoming-events' element={<UpcomingEvents />}/>
+        <Route path='/past-events' element={<PastEvents />}/>
+        <Route path='/compare-fighters' element={<CompareFighters />}/>
+        <Route path='/predictions' element={<Predictions />}/>
+        <Route path='/profile' element={<Profile />}/>
 
       </Routes> 
 

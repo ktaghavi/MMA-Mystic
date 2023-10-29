@@ -1,48 +1,100 @@
-import './SignUp.css';
+import { useNavigate } from "react-router-dom"
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import useUserStore from "../../../hooks/userStore";
 
-const SignUp = ({users, setUsers}) => {
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
-    fetch('/api/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    })
-    .then (r => r.json())
-    .then (data => setUsers([...users, data]))
-  };
-
-  return (
-    <div className='parent'>
-      <div className='div1'>
-        <b>
-        <h1 style={{fontSize: '1.5rem', paddingBottom: '10px'}}>
-        Sign Up!
-        </h1>
-        </b>
-        <form onSubmit={handleSubmit} className='form'>
-            <div>
-            {/* <label>Username</label> */}
-            <input type="text" name="username" placeholder='Username' style={{margin: '10px'}}></input>
-            {/* <label>Password</label> */}
-            <input type="password" name="password" placeholder='Password'></input>
-            </div>
-
-            <div>
-            {/* <label>Email</label> */}
-            <input type="email" name="email" placeholder='Email 'style={{margin: '10px'}}></input>
-            </div>
+const SignUp = () => {
+    const nav = useNavigate()
+    const {user, updateUser} = useUserStore();
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            username: '',
+            password: ''
+        },
+        validationSchema: Yup.object({
+            email: Yup.string().required('Required').email('Invalid email address'),
+            username: Yup.string()
+                .required('Required'),
+            password: Yup.string().required('Required')
+            .min(7, 'Username should be over 6 characters long')
+            .matches(/[a-zA-Z]/, 'Password must contain at least one letter.')
+            .matches(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/, 'Password must contain at least one punctuation.'),
+        }),
+        onSubmit: values => {
+            // console.log('Form data', values);
             
-            <div>
-              <button type="submit">Sign Up</button>
-            </div>
-  </form>
-    </div>
-    </div>
-  )
-}
+            const userObject = {
+                "email": values.email,
+                "username": values.username,
+                "password": values.password
+            }
+            console.log(userObject);
 
-export default SignUp
+            fetch('/api/users',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userObject)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response error");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                updateUser(data)
+                nav("/compare-fighters");
+            })
+            .catch(error => {
+                console.log("error", error.message);
+            });
+            
+        },
+    });
+
+    return (
+        <form onSubmit={formik.handleSubmit}>
+            <div className="input-group">
+                <label>Email</label>
+                <input
+                    type="email"
+                    {...formik.getFieldProps('email')}
+                />
+                {formik.touched.email && formik.errors.email ? (
+                    <div className="error">{formik.errors.email}</div>
+                ) : null}
+            </div>
+
+            <div className="input-group">
+                <label>Username</label>
+                <input
+                    type="text"
+                    {...formik.getFieldProps('username')}
+                />
+                {formik.touched.username && formik.errors.username ? (
+                    <div className="error">{formik.errors.username}</div>
+                ) : null}
+            </div>
+
+            <div className="input-group">
+                <label>Password</label>
+                <input
+                    type="password"
+                    {...formik.getFieldProps('password')}
+                />
+                {formik.touched.password && formik.errors.password ? (
+                    <div className="error">{formik.errors.password}</div>
+                ) : null}
+            </div>
+
+            <button type="submit">Signup</button>
+        </form>
+    );
+};
+
+export default SignUp;
