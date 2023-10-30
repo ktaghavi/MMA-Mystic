@@ -1,0 +1,22 @@
+/* Footer.css */
+.footer {
+    background-color: #333;
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center;
+  }
+  
+  /* Optional: To center vertically in the footer */
+  .footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }  

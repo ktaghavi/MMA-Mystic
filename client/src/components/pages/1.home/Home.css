@@ -1,0 +1,13 @@
+/* Home.css */
+.home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Center vertically on the viewport */
+    color: #5c5a5a; /* Light gray background color */
+  }
+  
+  .title {
+    font-size: 6rem;
+    text-align: center;
+  }
