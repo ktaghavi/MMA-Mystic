@@ -1,7 +1,7 @@
 import { React} from 'react'
 import { NavLink } from 'react-router-dom'
 import'./NavBar.css'
-import useUserStore from '../../hooks/userStore'
+import useUserStore from '../../hooks/usersStore'
 
 function NavBar() {
   const {user, deleteUser} = useUserStore();
@@ -18,6 +18,8 @@ function NavBar() {
   const loggedInNav = (
     <header>
       <nav>
+        <p>Welcome {user?.username}!</p>
+
         <NavLink to="/">Home</NavLink>
         <NavLink to="/upcoming-events">Upcoming Events</NavLink>
         <NavLink to="/past-events">Past Events</NavLink>

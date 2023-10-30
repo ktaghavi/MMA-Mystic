@@ -89,16 +89,20 @@ class UserById(Resource):
         return user_to_choose.to_dict(), 200
     
     def patch(self, id):
-
         data_to_patch_from = request.get_json()
-
-        user_to_choose = User.query.filter_by(id=id).first() 
+        user_to_choose = User.query.filter_by(id=id).first()
 
         if user_to_choose:
             for field in data_to_patch_from:
-                setattr(user_to_choose, field ,data_to_patch_from[field])
+            # Check if the field exists in the User model
+                if hasattr(user_to_choose, field):
+                    setattr(user_to_choose, field, data_to_patch_from[field])
+                else:
+                    return {'error': 'Invalid field: {}'.format(field)}, 400
+            db.session.commit()
+            return user_to_choose.to_dict(), 200
         else:
-            return {'error':'the user does not exist'}, 404
+            return {'error': 'The user does not exist'}, 404
         
     def delete(self, id):
 

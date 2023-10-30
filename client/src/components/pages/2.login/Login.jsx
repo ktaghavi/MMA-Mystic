@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import useUserStore from "../../../hooks/userStore";
+import useUserStore from "../../../hooks/usersStore";
 
 function Login() {
     const nav = useNavigate()

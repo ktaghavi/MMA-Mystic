@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import useUserStore from "../../../hooks/userStore";
+import useUserStore from "../../../hooks/usersStore";
 
 
 const SignUp = () => {
