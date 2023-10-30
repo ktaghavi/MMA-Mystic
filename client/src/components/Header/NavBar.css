@@ -16,7 +16,10 @@ header {
     color: #fff;
     margin: 10px;
   }
-  
+    
+nav a:hover {
+    color: rgb(185, 65, 185);
+}
   /* Optional: Responsive design for small screens */
   @media (max-width: 768px) {
     nav {
