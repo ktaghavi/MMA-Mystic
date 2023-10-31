@@ -100,3 +100,4 @@ class Prediction(db.Model, SerializerMixin):
         "-fighter_1",
         "-fighter_2",
     ]
+
