@@ -45,7 +45,7 @@ function CompareFighters() {
       <div className='border-2 border-red-600'>
         <label>Choose Fighter 1:</label>
         <select value={selectedFighter1} onChange={(e) => setSelectedFighter1(e.target.value)}>
-          <option value="">Select Fighter 1</option>
+          <option value="">Select Fighter</option>
           {fighterOptions}
         </select>
         {fighter1 && (
