@@ -58,10 +58,13 @@ const SignUp = () => {
     });
 
     return (
+    <div>
+        <h2>Sign Up</h2>
         <form onSubmit={formik.handleSubmit}>
             <div className="input-group">
                 <label>Email</label>
                 <input
+                    className="border-2 border-black-500 my-2"
                     type="email"
                     {...formik.getFieldProps('email')}
                 />
@@ -70,9 +73,10 @@ const SignUp = () => {
                 ) : null}
             </div>
 
-            <div className="input-group">
+            <div>
                 <label>Username</label>
                 <input
+                    className="border-2 border-black-500 my-2"
                     type="text"
                     {...formik.getFieldProps('username')}
                 />
@@ -84,6 +88,7 @@ const SignUp = () => {
             <div className="input-group">
                 <label>Password</label>
                 <input
+                    className="border-2 border-black-500 my-2"
                     type="password"
                     {...formik.getFieldProps('password')}
                 />
@@ -94,6 +99,7 @@ const SignUp = () => {
 
             <button type="submit">Signup</button>
         </form>
+    </div>
     );
 };
 

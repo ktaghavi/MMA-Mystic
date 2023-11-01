@@ -15,6 +15,7 @@ form {
     padding: 10px;
     border-radius: 30px;
   }
+
   .parent {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -32,7 +33,7 @@ form {
     border-radius: 0.25rem;
     border: none;
   }
-  
+    
   button[type=submit] {
     padding: 0.5rem;
     background-color: #052950;

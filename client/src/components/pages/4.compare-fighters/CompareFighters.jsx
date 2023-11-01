@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import FighterCard from './FighterCard';
+import PredictiveModel from './PredictiveModel';
 
 function CompareFighters() {
   const [fighters, setFighters] = useState([]);
   const [selectedFighter1, setSelectedFighter1] = useState('');
   const [selectedFighter2, setSelectedFighter2] = useState('');
+  const [showPredictiveModel, setShowPredictiveModel] = useState(false);
 
   useEffect(() => {
     // Fetch the list of fighters from your backend
@@ -40,37 +42,48 @@ function CompareFighters() {
 
   return (
     <>
-    <p className='m-auto bg-purple-300 w-fit text-lg'>Compare Fighters!</p>
-    <div className='flex flex-row justify-around'>
-      <div className='border-2 border-red-600'>
-        <label>Choose Fighter 1:</label>
-        <select value={selectedFighter1} onChange={(e) => setSelectedFighter1(e.target.value)}>
-          <option value="">Select Fighter</option>
-          {fighterOptions}
-        </select>
-        {fighter1 && (
-        <div>
-          <FighterCard fighter={fighter1} />
+      <p className='m-auto bg-purple-300 w-fit text-lg'>Compare Fighters!</p>
+      <div className='flex flex-row justify-around'>
+        <div >
+          <div className='border-2 border-red-600'>
+            <label>Choose Fighter 1:</label>
+            <select value={selectedFighter1} onChange={(e) => setSelectedFighter1(e.target.value)}>
+              <option value="">Select Fighter</option>
+              {fighterOptions}
+            </select>
+          </div>
+          {fighter1 && (
+            <div>
+              <FighterCard fighter={fighter1} />
+            </div>
+          )}
         </div>
-      )}
+
+        <div >
+          <div >
+            <div className='border-2 border-blue-600 w-fit'>
+              <label >Choose Fighter 2:</label>
+              <select value={selectedFighter2} onChange={(e) => setSelectedFighter2(e.target.value)}>
+                <option value="">Select Fighter</option>
+                {fighterOptions}
+              </select>
+            </div>
+            {fighter2 && (
+              <div>
+                <FighterCard fighter={fighter2} />
+              </div>
+            )}
+          </div>
+
+        </div>
       </div>
-      <div >
-        <div className='border-2 border-blue-600'>
-        <label >Choose Fighter 2:</label>
-        <select value={selectedFighter2} onChange={(e) => setSelectedFighter2(e.target.value)}>
-          <option value="">Select Fighter</option>
-          {fighterOptions}
-        </select>
-        </div>
-        {fighter2 && (
-        <div>
-          <FighterCard fighter={fighter2} />
-        </div>
-      )}
+      <div className=''>
+        <button onClick={()=> setShowPredictiveModel(!showPredictiveModel)}  className='w-fit bg-pink-500'>PREDICT!</button>
+        {showPredictiveModel ? <PredictiveModel fighter1={fighter1} fighter2={fighter2}/> : null}
       </div>
-    </div>
     </>
   );
 }
 
 export default CompareFighters;
+

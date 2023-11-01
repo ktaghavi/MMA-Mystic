@@ -6,7 +6,7 @@ function Login() {
     const nav = useNavigate()
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const {user, updateUser} = useUserStore();
+    const { user, updateUser } = useUserStore();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -22,36 +22,38 @@ function Login() {
         })
             .then(response => {
                 if (!response.ok) {
-                  throw new Error("Network response error");
+                    throw new Error("Network response error");
                 }
                 return response.json();
             })
             .then(data => {
-              console.log(data);
-              updateUser(data)
-              nav("/compare-fighters");
+                console.log(data);
+                updateUser(data)
+                nav("/compare-fighters");
             })
             .catch(error => {
-              console.log("error", error.message);
+                console.log("error", error.message);
             });
     };
 
     return (
-        <div className="login-container">
+        <div className="">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
-                <div className="input-group">
+                <div className="">
                     <label>Username:</label>
                     <input
+                        className="border-2 border-black-500 my-2"
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
                     />
                 </div>
-                <div className="input-group">
+                <div className="">
                     <label>Password:</label>
                     <input
+                        className="border-2 border-black-500 my-2"
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
