@@ -24,7 +24,7 @@ function NavBar() {
         <NavLink to="/upcoming-events">Upcoming Events</NavLink>
         <NavLink to="/past-events">Past Events</NavLink>
         <NavLink to="/compare-fighters">Compare Fighters</NavLink>
-        <NavLink to="/predictions-library">Predictions</NavLink>
+        <NavLink to="/predictions-library">Predictions Library</NavLink>
         <NavLink to="/profile">Profile</NavLink>
         <NavLink to='/' onClick={() => {
           fetch("/api/logout", {method: "DELETE"})

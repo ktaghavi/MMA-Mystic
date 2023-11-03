@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import FighterCard from './FighterCard';
 import PredictiveModel from './PredictiveModel';
+import useUserStore from "../../../hooks/usersStore";
 
 function CompareFighters() {
   const [fighters, setFighters] = useState([]);
   const [selectedFighter1, setSelectedFighter1] = useState('');
   const [selectedFighter2, setSelectedFighter2] = useState('');
   const [showPredictiveModel, setShowPredictiveModel] = useState(false);
+  const [prediction, setPrediction] = useState({F1_win_prob:0.0, F2_win_prob:0.0});
+  const { user, updateUser } = useUserStore();
+
+  console.log(prediction);
 
   useEffect(() => {
     // Fetch the list of fighters from your backend
@@ -35,21 +40,23 @@ function CompareFighters() {
   const fighter2 = getSelectedFighterData(selectedFighter2);
 
   const savePrediction = () => {
-    // Here, you can format and save the prediction to the user's predictions
-    const formattedPrediction = `${fighter1.name} vs. ${fighter2.name}: ${prediction}`;
-    setUserPrediction(formattedPrediction);
+    const predictionData = {
+      user_id: user.id,
+      F1_id: fighter1.id,
+      F2_id: fighter2.id,
+      F1_win_prob: prediction.F1_win_prob,
+      F2_win_prob: prediction.F2_win_prob,
+    };
 
-    // You can also send a POST request to save the prediction on the backend
     fetch('/api/predictions-library', {
       method: 'POST',
-      body: JSON.stringify({ prediction: formattedPrediction }),
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(predictionData),
     })
       .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the server if needed
+      .then((data) => {console.log(data)
       })
       .catch((error) => console.error('Error saving prediction:', error));
   };
@@ -93,7 +100,7 @@ function CompareFighters() {
       </div>
       <div className=''>
         <button onClick={()=> setShowPredictiveModel(!showPredictiveModel)}  className='w-fit bg-pink-500'>PREDICT!</button>
-        {showPredictiveModel ? <PredictiveModel fighter1={fighter1} fighter2={fighter2}/> : null}
+        {showPredictiveModel ? <PredictiveModel fighter1={fighter1} fighter2={fighter2} setPrediction = {setPrediction}/> : null}
         <button onClick={savePrediction} className='w-fit bg-green-500'>
           Save Prediction!
         </button>

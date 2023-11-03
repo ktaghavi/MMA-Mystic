@@ -231,6 +231,7 @@ class Predictions(Resource):
     def post(self):
         prediction_data = request.get_json()
         try:
+            print(prediction_data)
             new_prediction = Prediction(
                 user_id = prediction_data['user_id'],
                 F1_id = prediction_data['F1_id'],
