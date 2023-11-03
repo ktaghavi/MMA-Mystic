@@ -18,8 +18,6 @@ function CompareFighters() {
       .catch((error) => console.error('Error fetching fighters:', error));
   }, []);
 
-  console.log(fighters)
-
   const fighterOptions = fighters.map((fighter) => (
     <option key={fighter.id} value={fighter.id}>
       {fighter.name}
@@ -36,9 +34,25 @@ function CompareFighters() {
   const fighter1 = getSelectedFighterData(selectedFighter1);
   const fighter2 = getSelectedFighterData(selectedFighter2);
 
-  console.log(selectedFighter1)
+  const savePrediction = () => {
+    // Here, you can format and save the prediction to the user's predictions
+    const formattedPrediction = `${fighter1.name} vs. ${fighter2.name}: ${prediction}`;
+    setUserPrediction(formattedPrediction);
 
-  console.log(fighter1)
+    // You can also send a POST request to save the prediction on the backend
+    fetch('/api/predictions-library', {
+      method: 'POST',
+      body: JSON.stringify({ prediction: formattedPrediction }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response from the server if needed
+      })
+      .catch((error) => console.error('Error saving prediction:', error));
+  };
 
   return (
     <>
@@ -80,6 +94,9 @@ function CompareFighters() {
       <div className=''>
         <button onClick={()=> setShowPredictiveModel(!showPredictiveModel)}  className='w-fit bg-pink-500'>PREDICT!</button>
         {showPredictiveModel ? <PredictiveModel fighter1={fighter1} fighter2={fighter2}/> : null}
+        <button onClick={savePrediction} className='w-fit bg-green-500'>
+          Save Prediction!
+        </button>
       </div>
     </>
   );

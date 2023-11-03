@@ -244,7 +244,7 @@ class Predictions(Resource):
         except:
             raise Exception('Error while creating prediction')
 
-api.add_resource(Predictions, '/predictions')
+api.add_resource(Predictions, '/predictions-library')
 
 class PredictionById(Resource):
 

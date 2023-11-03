@@ -1,6 +1,3 @@
-// PredictiveModel.js
-import React from 'react';
-
 function PredictiveModel({ fighter1, fighter2 }) {
   // Define weights for each statistic
   const weights = {

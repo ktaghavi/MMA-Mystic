@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 76d8a56c69ca
+Revision ID: 6abd4750a11b
 Revises: 
-Create Date: 2023-10-26 15:58:52.687594
+Create Date: 2023-11-03 14:46:41.427669
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '76d8a56c69ca'
+revision = '6abd4750a11b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,6 +22,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('nickname', sa.String(), nullable=True),
+    sa.Column('pic', sa.String(), nullable=True),
     sa.Column('weightclass', sa.String(), nullable=True),
     sa.Column('height', sa.Float(), nullable=True),
     sa.Column('stance', sa.String(), nullable=True),
@@ -50,10 +51,6 @@ def upgrade():
     sa.Column('F2_id', sa.Integer(), nullable=True),
     sa.Column('event_date', sa.Date(), nullable=True),
     sa.Column('location', sa.String(), nullable=True),
-    sa.Column('F1_opening_odds', sa.Float(), nullable=True),
-    sa.Column('F2_opening_odds', sa.Float(), nullable=True),
-    sa.Column('F1_closing_odds', sa.Float(), nullable=True),
-    sa.Column('F2_closing_odds', sa.Float(), nullable=True),
     sa.Column('Result', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['F1_id'], ['fighters.id'], name=op.f('fk_fight_history_F1_id_fighters')),
     sa.ForeignKeyConstraint(['F2_id'], ['fighters.id'], name=op.f('fk_fight_history_F2_id_fighters')),

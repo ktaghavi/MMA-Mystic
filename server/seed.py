@@ -44,9 +44,9 @@ if __name__ == '__main__':
 
         # Create fight history
         fights = [
-            FightHistory(F1_id=fighters[0].id, F2_id=fighters[1].id, event_date=date.fromisoformat('2023-10-21'), location='Abu Dhabi', F1_opening_odds=1.5, F2_opening_odds=2.7, F1_closing_odds=1.4, F2_closing_odds=3.1, Result='Islam Makhachev wins by TKO'),
-            FightHistory(F1_id=fighters[2].id, F2_id=fighters[3].id, event_date=date.fromisoformat('2023-10-22'), location='Las Vegas', F1_opening_odds=1.7, F2_opening_odds=2.3, F1_closing_odds=1.6, F2_closing_odds=2.5, Result='Khamzat Chimaev wins by UD'),
-            FightHistory(F1_id=fighters[4].id, F2_id=fighters[5].id, event_date=date.fromisoformat('2023-10-23'), location='New York', F1_opening_odds=1.8, F2_opening_odds=2.0, F1_closing_odds=1.7, F2_closing_odds=2.1, Result='No Contest')
+            FightHistory(F1_id=fighters[0].id, F2_id=fighters[1].id, event_date=date.fromisoformat('2023-10-21'), location='Abu Dhabi', Result='Islam Makhachev wins by TKO'),
+            FightHistory(F1_id=fighters[2].id, F2_id=fighters[3].id, event_date=date.fromisoformat('2023-10-22'), location='Las Vegas', Result='Khamzat Chimaev wins by UD'),
+            FightHistory(F1_id=fighters[4].id, F2_id=fighters[5].id, event_date=date.fromisoformat('2023-10-23'), location='New York', Result='No Contest')
         ]
 
         db.session.add_all(fights)
