@@ -14,17 +14,15 @@ function PredictionsLibrary() {
   }, []);
 
   const [userPredictions, setUserPredictions] = useState([]);
-
+  console.log(userPredictions)
   return (
     <div>
       <h2>Your Predictions Library</h2>
       <ul>
         {userPredictions.map((prediction) => (
           <div key={prediction.id}>
-            <li>{prediction.F1_id}</li>
-            <li>{prediction.F1_win_prob}</li>
-            <li>{prediction.F2_id}</li>
-            <li>{prediction.F2_win_prob}</li>
+            <li>{prediction.fighter_1.name}: {prediction.F1_win_prob}%</li>
+            <li>{prediction.fighter_2.name}: {prediction.F2_win_prob}%</li>
           </div>
         ))}
       </ul>

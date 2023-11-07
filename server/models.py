@@ -93,7 +93,7 @@ class Prediction(db.Model, SerializerMixin):
 
     serialize_rules = [
         "-user",
-        "-fighter_1",
-        "-fighter_2",
+        "-fighter_1.predictions_fighter_1",
+        "-fighter_2.predictions_fighter_2",
     ]
 

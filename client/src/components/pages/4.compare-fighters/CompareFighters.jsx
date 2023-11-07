@@ -38,8 +38,8 @@ function CompareFighters({user}) {
   const savePrediction = () => {
     const predictionData = {
       user_id: user.id,
-      F1_id: fighter1.id,
-      F2_id: fighter2.id,
+      F1_id: fighter1.name,
+      F2_id: fighter2.name,
       F1_win_prob: prediction.F1_win_prob,
       F2_win_prob: prediction.F2_win_prob,
     };
