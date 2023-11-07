@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 
-const Profile = ({user}) => {
+const Profile = ({user,setUser}) => {
     const nav = useNavigate();
     const userId = user.id; // Replace with how you obtain the user's ID.
 
@@ -41,7 +41,7 @@ const Profile = ({user}) => {
                 return response.json();
             })
             .then((data) => {
-                user(data)
+                setUser(data)
                 nav("/compare-fighters");
             })
             .catch((error) => {

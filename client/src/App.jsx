@@ -45,7 +45,7 @@ function App() {
         <Route path='/past-events' element={<PastEvents />}/>
         <Route path='/compare-fighters' element={<CompareFighters />}/>
         <Route path='/predictions-library' element={<PredictionsLibrary user={user}/>}/>
-        <Route path='/profile' element={<Profile user={user}/>}/>
+        <Route path='/profile' element={<Profile setUser={setUser} user={user}/>}/>
 
       </Routes> 
 
