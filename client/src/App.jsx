@@ -23,7 +23,7 @@ function App() {
     fetch('/api/check_session')
       .then((response) => response.json())
       .then((data) => {
-        if(user.username){
+        if(data.username){
           setUser(data)
         }
       })
@@ -43,7 +43,7 @@ function App() {
         <Route path="/signup" element={<SignUp setUser={setUser}/>}/>
         <Route path='/upcoming-events' element={<UpcomingEvents />}/>
         <Route path='/past-events' element={<PastEvents />}/>
-        <Route path='/compare-fighters' element={<CompareFighters />}/>
+        <Route path='/compare-fighters' element={<CompareFighters user={user}/>}/>
         <Route path='/predictions-library' element={<PredictionsLibrary user={user}/>}/>
         <Route path='/profile' element={<Profile setUser={setUser} user={user}/>}/>
 

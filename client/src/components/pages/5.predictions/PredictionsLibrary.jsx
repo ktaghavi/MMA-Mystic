@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function PredictionsLibrary({user}) {
+function PredictionsLibrary() {
 
   useEffect(() => {
     // Fetch the user's predictions from your backend
@@ -14,8 +14,6 @@ function PredictionsLibrary({user}) {
   }, []);
 
   const [userPredictions, setUserPredictions] = useState([]);
-
-  console.log(userPredictions)
 
   return (
     <div>
