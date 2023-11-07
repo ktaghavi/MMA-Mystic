@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FighterCard from './FighterCard';
 import PredictiveModel from './PredictiveModel';
-import useUserStore from "../../../hooks/usersStore";
 
 function CompareFighters() {
   const [fighters, setFighters] = useState([]);
@@ -9,7 +8,6 @@ function CompareFighters() {
   const [selectedFighter2, setSelectedFighter2] = useState('');
   const [showPredictiveModel, setShowPredictiveModel] = useState(false);
   const [prediction, setPrediction] = useState({F1_win_prob:0.0, F2_win_prob:0.0});
-  const { user, updateUser } = useUserStore();
 
   console.log(prediction);
 

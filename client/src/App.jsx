@@ -1,4 +1,5 @@
 import {BrowserRouter, Routes, Route, NavLink} from 'react-router-dom'
+import { useState,useEffect } from 'react'
 import './App.css'
 
 import NavBar from './components/Header/NavBar'
@@ -14,22 +15,37 @@ import PastEvents from './components/pages/8.past-events/PastEvents'
 import Footer from './components/Footer/Footer'
 
 function App() {  
+
+  const [user,setUser] = useState(null)
+
+  useEffect(() => {
+    // Fetch the user's predictions from your backend
+    fetch('/api/check_session')
+      .then((response) => response.json())
+      .then((data) => {
+        if(user.username){
+          setUser(data)
+        }
+      })
+      .catch((error) => console.error('Error fetching user:', error));
+  }, []);
+
   return (  
     <BrowserRouter>
     
-      <NavBar />
+      <NavBar user={user} setUser={setUser}/>
 
       <Routes>
 
         <Route path="/" element={<Home />}/>
 
-        <Route path="/login" element={<Login />}/>
-        <Route path="/signup" element={<SignUp />}/>
+        <Route path="/login" element={<Login setUser={setUser}/>}/>
+        <Route path="/signup" element={<SignUp setUser={setUser}/>}/>
         <Route path='/upcoming-events' element={<UpcomingEvents />}/>
         <Route path='/past-events' element={<PastEvents />}/>
         <Route path='/compare-fighters' element={<CompareFighters />}/>
-        <Route path='/predictions-library' element={<PredictionsLibrary />}/>
-        <Route path='/profile' element={<Profile />}/>
+        <Route path='/predictions-library' element={<PredictionsLibrary user={user}/>}/>
+        <Route path='/profile' element={<Profile user={user}/>}/>
 
       </Routes> 
 

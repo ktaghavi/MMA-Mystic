@@ -4,14 +4,14 @@ function PredictiveModel({ fighter1, fighter2, setPrediction }) {
   // Define weights for each statistic
   const [predictionString, setPredictionString] = useState("")
   const weights = {
-    SigLpM: 2,           // Significant Strikes Landed per Minute
-    StrAcc: 2,            // Striking Accuracy
-    SApM: 1.5,           // Significant Strikes Absorbed per Minute
-    StrDef: 1.5,          // Striking Defense
-    TDAvg: 1,            // Takedowns Average
-    TDAcc: 1,            // Takedown Accuracy
-    TDDef: 1,            // Takedown Defense
-    SubAvg: 1.5,         // Submission Average
+    SLpM: 2,             // Significant Strikes Landed per Minute
+    Str_Acc: 2,          // Striking Accuracy
+    SApM: 0.5,           // Significant Strikes Absorbed per Minute
+    Str_Def: 0.5,        // Striking Defense
+    TD_Avg: 3,           // Takedowns Average
+    TD_Acc: 2,           // Takedown Accuracy
+    TD_Def: 2,           // Takedown Defense
+    Sub_Avg: 1,          // Submission Average
   };
 
   function calculateFighterPoints(fighter, weights) {
@@ -27,7 +27,6 @@ function PredictiveModel({ fighter1, fighter2, setPrediction }) {
     const fighter2Points = calculateFighterPoints(fighter2, weights);
     const F1Prediction = Math.round((fighter1Points / (fighter1Points + fighter2Points)) * 100)
     const F2Prediction = Math.round((fighter2Points / (fighter1Points + fighter2Points)) * 100)
-
     setPrediction({F1_win_prob: F1Prediction, F2_win_prob: F2Prediction})
 
     if (fighter1Points > fighter2Points) {

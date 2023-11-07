@@ -28,7 +28,7 @@ def import_fighter_data():
                 weight=row['weight'],
                 reach=row['reach'],
                 stance=row['stance'],
-                DOB=dob,  # Use the date object or None
+                DOB=dob,
                 SLpM=row['SLpM'],
                 Str_Acc=row['Str_Acc'],
                 SApM=row['SApM'],

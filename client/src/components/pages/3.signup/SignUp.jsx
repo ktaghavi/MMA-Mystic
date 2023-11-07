@@ -1,12 +1,10 @@
 import { useNavigate } from "react-router-dom"
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import useUserStore from "../../../hooks/usersStore";
 
 
-const SignUp = () => {
+const SignUp = ({setUser}) => {
     const nav = useNavigate()
-    const {user, updateUser} = useUserStore();
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -30,8 +28,6 @@ const SignUp = () => {
                 "username": values.username,
                 "password": values.password
             }
-            console.log(userObject);
-
             fetch('/api/users',{
                 method: 'POST',
                 headers: {
@@ -46,8 +42,7 @@ const SignUp = () => {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
-                updateUser(data)
+                setUser(data)
                 nav("/compare-fighters");
             })
             .catch(error => {

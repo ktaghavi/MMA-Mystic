@@ -1,10 +1,7 @@
-import { React} from 'react'
 import { NavLink } from 'react-router-dom'
 import'./NavBar.css'
-import useUserStore from '../../hooks/usersStore'
 
-function NavBar() {
-  const {user, deleteUser} = useUserStore();
+function NavBar({user,setUser}) {
 
   const loggedOutNav = (
     <header>
@@ -34,13 +31,13 @@ function NavBar() {
             }
           })
           .then(() => {
-            deleteUser()
+            setUser(null)
           })
         }}>Log Out</NavLink>      
       </nav>
     </header>
   )
-  return user? loggedInNav : loggedOutNav
+  return user === null ? loggedOutNav : loggedInNav 
 }
 
 export default NavBar

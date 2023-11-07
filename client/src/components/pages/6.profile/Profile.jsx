@@ -1,11 +1,9 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import useUserStore from '../../../hooks/usersStore';
 
-const Profile = () => {
+const Profile = ({user}) => {
     const nav = useNavigate();
-    const { user, updateUser } = useUserStore();
     const userId = user.id; // Replace with how you obtain the user's ID.
 
     const formik = useFormik({
@@ -43,7 +41,7 @@ const Profile = () => {
                 return response.json();
             })
             .then((data) => {
-                updateUser(data)
+                user(data)
                 nav("/compare-fighters");
             })
             .catch((error) => {

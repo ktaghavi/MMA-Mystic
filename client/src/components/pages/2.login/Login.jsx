@@ -1,12 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import useUserStore from "../../../hooks/usersStore";
+import { useState, useEffect} from "react";
 
-function Login() {
+function Login({setUser}) {
     const nav = useNavigate()
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const { user, updateUser } = useUserStore();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,7 +26,7 @@ function Login() {
             })
             .then(data => {
                 console.log(data);
-                updateUser(data)
+                setUser(data)
                 nav("/compare-fighters");
             })
             .catch(error => {
