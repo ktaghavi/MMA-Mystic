@@ -1,10 +1,9 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-
-const SignUp = ({setUser}) => {
-    const nav = useNavigate()
+const SignUp = ({ setUser }) => {
+    const nav = useNavigate();
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -52,49 +51,55 @@ const SignUp = ({setUser}) => {
         },
     });
 
+    const gradientBackground = {
+        background: 'linear-gradient(180deg, #112c49 0%, #010010 100%)',
+    };
+
     return (
-    <div>
-        <h2>Sign Up</h2>
-        <form onSubmit={formik.handleSubmit}>
-            <div className="input-group">
-                <label>Email</label>
-                <input
-                    className="border-2 border-black-500 my-2"
-                    type="email"
-                    {...formik.getFieldProps('email')}
-                />
-                {formik.touched.email && formik.errors.email ? (
-                    <div className="error">{formik.errors.email}</div>
-                ) : null}
-            </div>
+        <div className="min-h-screen flex items-center justify-center" style={gradientBackground}>
+            <div className="bg-white p-8 rounded-lg shadow-lg">
+                <h2 className="text-2xl text-center mb-4">Sign Up</h2>
+                <form onSubmit={formik.handleSubmit}>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Email</label>
+                        <input
+                            className="w-full p-2 border border-gray-300 rounded"
+                            type="email"
+                            {...formik.getFieldProps('email')}
+                        />
+                        {formik.touched.email && formik.errors.email ? (
+                            <div className="text-red-600 text-sm">{formik.errors.email}</div>
+                        ) : null}
+                    </div>
 
-            <div>
-                <label>Username</label>
-                <input
-                    className="border-2 border-black-500 my-2"
-                    type="text"
-                    {...formik.getFieldProps('username')}
-                />
-                {formik.touched.username && formik.errors.username ? (
-                    <div className="error">{formik.errors.username}</div>
-                ) : null}
-            </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Username</label>
+                        <input
+                            className="w-full p-2 border border-gray-300 rounded"
+                            type="text"
+                            {...formik.getFieldProps('username')}
+                        />
+                        {formik.touched.username && formik.errors.username ? (
+                            <div className="text-red-600 text-sm">{formik.errors.username}</div>
+                        ) : null}
+                    </div>
 
-            <div className="input-group">
-                <label>Password</label>
-                <input
-                    className="border-2 border-black-500 my-2"
-                    type="password"
-                    {...formik.getFieldProps('password')}
-                />
-                {formik.touched.password && formik.errors.password ? (
-                    <div className="error">{formik.errors.password}</div>
-                ) : null}
-            </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Password</label>
+                        <input
+                            className="w-full p-2 border border-gray-300 rounded"
+                            type="password"
+                            {...formik.getFieldProps('password')}
+                        />
+                        {formik.touched.password && formik.errors.password ? (
+                            <div className="text-red-600 text-sm">{formik.errors.password}</div>
+                        ) : null}
+                    </div>
 
-            <button type="submit">Signup</button>
-        </form>
-    </div>
+                    <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">Sign Up</button>
+                </form>
+            </div>
+        </div>
     );
 };
 

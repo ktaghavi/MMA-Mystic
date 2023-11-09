@@ -20,7 +20,7 @@ function Login({ setUser }) {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error("Network response error");
+                    throw Error("Network response error");
                 }
                 return response.json();
             })
@@ -39,7 +39,7 @@ function Login({ setUser }) {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center" style={gradientBackground}>
+        <div className="flex items-center justify-center h-screen" style={gradientBackground}>
             <div className="bg-white p-8 rounded-lg shadow-lg">
                 <h2 className="text-2xl text-center mb-4">Login</h2>
                 <form onSubmit={handleSubmit}>

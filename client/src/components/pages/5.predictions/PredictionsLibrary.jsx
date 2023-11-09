@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 
 function PredictionsLibrary() {
+  const [userPredictions, setUserPredictions] = useState(null);
+  const gradientBackground = {
+    background: 'linear-gradient(180deg, #112c49 0%, #010010 100%)',
+  };
 
   useEffect(() => {
     // Fetch the user's predictions from your backend
@@ -13,16 +17,15 @@ function PredictionsLibrary() {
       .catch((error) => console.error('Error fetching user predictions:', error));
   }, []);
 
-  const [userPredictions, setUserPredictions] = useState([]);
   console.log(userPredictions)
   return (
-    <div>
-      <h2>Your Predictions Library</h2>
+    <div className="min-h-screen" style={gradientBackground}>
+      <h2 className="text-white">Your Predictions Library</h2>
       <ul>
-        {userPredictions.map((prediction) => (
-          <div key={prediction.id}>
-            <li>{prediction.fighter_1.name}: {prediction.F1_win_prob}%</li>
-            <li>{prediction.fighter_2.name}: {prediction.F2_win_prob}%</li>
+        {userPredictions?.map((prediction) => (
+          <div className="text-white" key={prediction.id}>
+            <li>{prediction.F1_id}: {prediction.F1_win_prob}%</li>
+            <li>{prediction.F2_id}: {prediction.F2_win_prob}%</li>
           </div>
         ))}
       </ul>
