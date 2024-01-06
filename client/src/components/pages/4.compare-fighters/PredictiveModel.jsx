@@ -4,15 +4,15 @@ function PredictiveModel({ fighter1, fighter2, setPrediction }) {
   // Define weights for each statistic
   const [predictionString, setPredictionString] = useState("")
   const weights = {
-    SLpM: 2,             // Significant Strikes Landed per Minute
-    Str_Acc: 2,          // Striking Accuracy
-    SApM: 0.5,           // Significant Strikes Absorbed per Minute
-    Str_Def: 0.5,        // Striking Defense
-    TD_Avg: 3,           // Takedowns Average
-    TD_Acc: 2,           // Takedown Accuracy
-    TD_Def: 2,           // Takedown Defense
-    Sub_Avg: 1,          // Submission Average
-  };
+      SLpM: 3,        // Increased due to higher correlation
+      Str_Acc: 2.5,   // Increased
+      SApM: 0.5,      // Reduced or consider using inversely
+      Str_Def: 2.5,   // Increased
+      TD_Avg: 1.5,    // Reduced
+      TD_Acc: 2.5,    // Reflects overall grappling effectiveness
+      TD_Def: 3,      // Increased due to strong correlation
+      Sub_Avg: 1      // Reduced
+    };
 
   function calculateFighterPoints(fighter, weights) {
     let totalPoints = 0;
