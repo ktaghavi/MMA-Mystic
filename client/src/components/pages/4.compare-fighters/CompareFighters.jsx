@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FighterCard from './FighterCard';
 import PredictiveModel from './PredictiveModel';
+import Select from 'react-select';
 
 function CompareFighters({ user }) {
   const [fighters, setFighters] = useState([]);
@@ -23,11 +24,10 @@ function CompareFighters({ user }) {
       .catch((error) => console.error('Error fetching fighters:', error));
   }, []);
 
-  const fighterOptions = fighters.map((fighter) => (
-    <option key={fighter.id} value={fighter.id}>
-      {fighter.name}
-    </option>
-  ));
+  const fighterOptions = fighters.map(fighter => ({
+    value: fighter.id,
+    label: fighter.name
+  }));
 
   // Function to get the selected fighter data
   const getSelectedFighterData = (fight_id) => {
@@ -62,58 +62,70 @@ function CompareFighters({ user }) {
       .catch((error) => console.error('Error saving prediction:', error));
   };
 
-  return (
-    <div className="min-h-screen" style={gradientBackground}>
-      <div className="w-full p-4 md:p-8 lg:p-12 bg-white rounded-lg shadow-lg">
-        <h2 className="text-2xl text-center mb-4">Compare Fighters!</h2>
-        <div className="flex flex-row justify-around">
-          <div>
-            <div className="border-2 border-red-600">
-              <label>Choose Fighter 1:</label>
-              <select
-                value={selectedFighter1}
-                onChange={(e) => setSelectedFighter1(e.target.value)}
-              >
-                <option value="">Select Fighter</option>
-                {fighterOptions}
-              </select>
+return (
+    <div className="min-h-screen flex justify-center items-center" style={gradientBackground}>
+      <div className="container mx-auto p-4 md:p-8 lg:p-12 bg-white rounded-lg shadow-lg">
+        <h2 className="text-2xl text-center font-bold mb-4">Compare Fighters!</h2>
+        <div className="flex flex-col md:flex-row justify-around mb-4">
+          <div className="mb-4 md:mb-0">
+            <div className="border-2 border-red-600 p-4 rounded">
+              <label className="font-bold mb-2">Choose Fighter 1:</label>
+              <Select
+                value={fighterOptions.find(option => option.value === selectedFighter1)}
+                onChange={(option) => setSelectedFighter1(option ? option.value : '')}
+                options={fighterOptions}
+                placeholder="Select Fighter"
+              />
             </div>
-            {fighter1 && <FighterCard fighter={fighter1} />}
+            {fighter1 && (
+            <div className="FighterCard mt-4">
+            <FighterCard fighter={fighter1} />
           </div>
-
+            )}
           <div>
-            <div className="border-2 border-blue-600 w-fit">
-              <label>Choose Fighter 2:</label>
-              <select
-                value={selectedFighter2}
-                onChange={(e) => setSelectedFighter2(e.target.value)}
-              >
-                <option value="">Select Fighter</option>
-                {fighterOptions}
-              </select>
+            <div className="border-2 border-blue-600 p-4 rounded">
+              <label className="font-bold mb-2">Choose Fighter 2:</label>
+              <Select
+                value={fighterOptions.find(option => option.value === selectedFighter2)}
+                onChange={(option) => setSelectedFighter2(option ? option.value : '')}
+                options={fighterOptions}
+                placeholder="Select Fighter"
+              />
             </div>
-            {fighter2 && <FighterCard fighter={fighter2} />}
+            {fighter2 && (
+            <div className="FighterCard mt-4">
+            <FighterCard fighter={fighter2} />
+          </div>
+            )}
           </div>
         </div>
+
         <div className="flex justify-center mt-4">
           <button
             onClick={() => setShowPredictiveModel(!showPredictiveModel)}
-            className="bg-pink-500 p-2 rounded"
+            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
           >
             PREDICT!
           </button>
         </div>
+
         {showPredictiveModel ? (
-          <PredictiveModel fighter1={fighter1} fighter2={fighter2} setPrediction={setPrediction} />
+          <div className="PredictiveModel mt-4">
+            <PredictiveModel fighter1={fighter1} fighter2={fighter2} setPrediction={setPrediction} />
+          </div>
         ) : null}
+
         <div className="flex justify-center mt-4">
-          <button onClick={savePrediction} className="bg-green-500 p-2 rounded">
+          <button
+            onClick={savePrediction}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          >
             Save Prediction!
           </button>
         </div>
       </div>
     </div>
-  );
-}
+  </div>
+  )};
 
 export default CompareFighters;

@@ -1,6 +1,7 @@
 function FighterCard({ fighter }) {
+  console.log(fighter);
   return (
-    <div className="fighter-card">
+    <div className="FighterCard">
       <h3>{fighter.name}</h3>
       <p>Height: {fighter.height}</p>
       <p>Weight: {fighter.weight}</p>
